@@ -79,7 +79,7 @@ end
 
 M = {
     -- Math modes
-    autosnippet({ trig = "mk", name = "$..$", dscr = "inline math" },
+    autosnippet({ trig = ",m", name = "$..$", dscr = "inline math" },
 	fmta([[
     $<>$<>
     ]],
