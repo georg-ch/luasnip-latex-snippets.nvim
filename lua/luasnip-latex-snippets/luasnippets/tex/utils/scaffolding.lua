@@ -65,8 +65,12 @@ end
 --end
 M.get_visual = function(_, parent)
   local selected = parent.snippet.env.LS_SELECT_RAW or {}
+
+  -- Avoid retaining a reference to LuaSnip's environment table.
+  selected = vim.deepcopy(selected)
+
   return sn(nil, {
-    i(1, vim.deepcopy(selected)),
+    r(1, "visual", i(nil, selected)),
   })
 end
 
