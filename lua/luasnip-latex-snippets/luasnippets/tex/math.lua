@@ -100,7 +100,7 @@ M = {
     <>
     .\end{align<>}
     ]],
-    { c(1, {t("*"), t(""), t("ed")}), i(2), rep(1) }), -- in order of least-most used
+    { c(1, {t(""), t("*"), t("ed")}), i(2), rep(1) }), -- in order of least-most used
 	{ condition = line_begin, show_condition = tex.show_line_begin }),
 
     autosnippet({ trig='==', name='&= align', dscr='&= align'},
@@ -116,7 +116,7 @@ M = {
     <>
     .\end{gather<>}
     ]],
-	{ c(1, {t("*"), t(""), t("ed")}), i(2), rep(1) }),
+	{ c(1, {t(""), t("*"), t("ed")}), i(2), rep(1) }),
 	{ condition = line_begin, show_condition = tex.show_line_begin }),
 
 	autosnippet({ trig = "eqn", name = "equation(|*)", dscr = "equation math" },
@@ -125,7 +125,7 @@ M = {
     <>
     .\end{equation<>}
     ]],
-	{ c(1, {t("*"), t("")}), i(2), rep(1) }),
+	{ c(1, {t(""), t("*")}), i(2), rep(1) }),
 	{ condition = line_begin, show_condition = tex.show_line_begin }),
 
     -- Matrices and Cases
