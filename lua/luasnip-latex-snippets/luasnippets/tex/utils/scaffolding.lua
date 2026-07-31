@@ -153,7 +153,7 @@ M.single_command_snippet = function(context, command, opts, ext)
 		context,
 		fmta(
 			command .. [[<>{<>}<><>]],
-			{ cnode or t(""), d(1 + (offset or 0), get_visual), (lnode or t("")), i(0) }
+			{ cnode or t(""), d(1 + (offset or 0), M.get_visual), (lnode or t("")), i(0) }
 		),
 		opts
 	)
