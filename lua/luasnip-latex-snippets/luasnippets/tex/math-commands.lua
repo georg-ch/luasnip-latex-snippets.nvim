@@ -256,6 +256,42 @@ M = {
     ]],
     { i(1), i(2), i(0) }),
     { condition = tex.in_math, show_condition = tex.in_math }),
+
+	-- autosucscripts
+	autosnippet(
+  {
+    trig = "(\\\\(?:alpha|beta|gamma|delta|epsilon|varepsilon|zeta|eta|theta|vartheta|iota|kappa|lambda|mu|nu|xi|pi|rho|sigma|tau|upsilon|phi|varphi|chi|psi|omega|Gamma|Delta|Theta|Lambda|Xi|Pi|Sigma|Upsilon|Phi|Psi|Omega))[ \t]?(\\d)",
+    name = "automatic Greek numeric subscript",
+    dscr = "\\alpha 1 → \\alpha_1",
+    trigEngine = "ecma",
+    wordTrig = false,
+    priority = 1000,
+  },
+  f(function(_, snip)
+    return snip.captures[1] .. "_" .. snip.captures[2]
+  end),
+  {
+    condition = tex.in_math,
+    show_condition = tex.in_math,
+  }
+),
+autosnippet(
+  {
+    trig = "([A-Za-z])(\\d)",
+    name = "automatic numeric subscript",
+    dscr = "x1 → x_1",
+    trigEngine = "ecma",
+    wordTrig = false,
+    priority = 1000,
+  },
+  f(function(_, snip)
+    return snip.captures[1] .. "_" .. snip.captures[2]
+  end),
+  {
+    condition = tex.in_math,
+    show_condition = tex.in_math,
+  }
+),
 }
 
 -- Auto backslashes
