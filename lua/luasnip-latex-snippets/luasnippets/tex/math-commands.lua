@@ -63,6 +63,98 @@ local generate_fraction = function (_, snip)
         { t(stripped:sub(1, j-1)), t(stripped:sub(j+1, -2)), i(1)}))
 end
 
+-- Wrap the captured atom in a one-argument LaTeX command.
+local function captured_command(command)
+    return fmta(
+        [[
+        \<>{<>}<>
+        ]],
+        {
+            t(command),
+            f(function(_, snip)
+                return snip.captures[1]
+            end),
+            i(0),
+        }
+    )
+end
+
+-- Wrap the contents of the final balanced parenthesized expression.
+--
+-- Example:
+--     (x + y)dot
+-- becomes:
+--     \dot{x + y}
+local function generate_parenthesized_command(command)
+    return function(_, snip)
+        local stripped = snip.captures[1]
+        local depth = 0
+        local j = #stripped
+
+        while j > 0 do
+            local char = stripped:sub(j, j)
+
+            if char == ")" then
+                depth = depth + 1
+            elseif char == "(" then
+                depth = depth - 1
+            end
+
+            if depth == 0 then
+                break
+            end
+
+            j = j - 1
+        end
+
+        -- Defensive fallback: this should not occur when the trigger matches.
+        if j == 0 then
+            return sn(nil, {
+                t("\\" .. command .. "{"),
+                i(1),
+                t("}"),
+                i(0),
+            })
+        end
+
+        return sn(
+            nil,
+            fmta(
+                [[
+                <>\<>{<>}<>
+                ]],
+                {
+                    t(stripped:sub(1, j - 1)),
+                    t(command),
+                    t(stripped:sub(j + 1, -2)),
+                    i(0),
+                }
+            )
+        )
+    end
+end
+
+local postfix_command_specs = {
+    dot = {
+        command = "dot",
+        name = "dot accent",
+    },
+    bar = {
+        command = "bar",
+        name = "bar accent",
+    },
+
+    -- Easy to add later:
+    -- hat = {
+    --     command = "hat",
+    --     name = "hat accent",
+    -- },
+    -- vec = {
+    --     command = "vec",
+    --     name = "vector accent",
+    -- },
+}
+
 M = {
     -- superscripts
     autosnippet({ trig = "sr", wordTrig = false },
@@ -494,5 +586,92 @@ table.insert(
 )
 end
 vim.list_extend(M, postfix_math_snippets)
+
+for trig, spec in pairs(postfix_command_specs) do
+    -- Explicit expansion:
+    --
+    --     dot<Tab>  -> \dot{}
+    --
+    -- This is an ordinary snippet, not an autosnippet.
+    table.insert(
+        M,
+        s(
+            {
+                trig = trig,
+                name = spec.name,
+                dscr = "\\" .. spec.command .. "{...}",
+                wordTrig = true,
+            },
+            fmta(
+                [[
+                \<>{<>}<>
+                ]],
+                {
+                    t(spec.command),
+                    i(1),
+                    i(0),
+                }
+            ),
+            {
+                condition = tex.in_math,
+                show_condition = tex.in_math,
+            }
+        )
+    )
+
+    -- Atomic operand:
+    --
+    --     xdot       -> \dot{x}
+    --     alphadot   -> \dot{\alpha} only if the buffer already contains
+    --                   \alpha before this snippet is evaluated
+    --     x_2dot     -> \dot{x_2}
+    --     x^{12}dot  -> \dot{x^{12}}
+    table.insert(
+        M,
+        autosnippet(
+            {
+                trig = "((\\d+)|(\\d*)(\\\\)?([A-Za-z]+)"
+                    .. "((\\^|_)(\\{\\d+\\}|\\d))*)"
+                    .. trig,
+                name = spec.name .. " of atom",
+                dscr = "Automatically wrap the preceding atom in \\" .. spec.command,
+                trigEngine = "ecma",
+                wordTrig = false,
+                priority = 1000,
+            },
+            captured_command(spec.command),
+            {
+                condition = tex.in_math,
+                show_condition = tex.in_math,
+            }
+        )
+    )
+
+    -- Parenthesized operand:
+    --
+    --     (x+y)dot       -> \dot{x+y}
+    --     A(x+(y-z))dot  -> A\dot{x+(y-z)}
+    table.insert(
+        M,
+        autosnippet(
+            {
+                trig = "(^.*\\))" .. trig,
+                name = spec.name .. " of parenthesized expression",
+                dscr = "Wrap the preceding parenthesized expression in \\"
+                    .. spec.command,
+                trigEngine = "ecma",
+                wordTrig = false,
+                priority = 1000,
+            },
+            {
+                d(1, generate_parenthesized_command(spec.command)),
+            },
+            {
+                condition = tex.in_math,
+                show_condition = tex.in_math,
+            }
+        )
+    )
+end
 
 return M
