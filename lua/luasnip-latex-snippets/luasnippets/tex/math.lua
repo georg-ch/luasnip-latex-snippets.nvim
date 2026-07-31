@@ -103,11 +103,18 @@ M = {
     { c(1, {t(""), t("*"), t("ed")}), i(2), rep(1) }), -- in order of least-most used
 	{ condition = line_begin, show_condition = tex.show_line_begin }),
 
-    autosnippet({ trig='==', name='&= align', dscr='&= align'},
+    autosnippet({ trig='=+', name='&neq align', dscr='&neq align'},
     fmta([[
     &<> <> \\
     ]],
-    { c(1, {t("="), t("\\leq"), i(1)}), i(2) }
+    { c(1, {t("\\leq"), t("\\geq"), t("\\equiv"), i(1)}), i(2) }
+    ), { condition = tex.in_align, show_condition = tex.in_align }),
+
+	autosnippet({ trig='==', name='&= align', dscr='&= align'},
+    fmta([[
+    &= <> \\
+    ]],
+    { i(1) }
     ), { condition = tex.in_align, show_condition = tex.in_align }),
 
 	autosnippet({ trig = "gat", name = "gather(|*|ed)", dscr = "gather math" },
