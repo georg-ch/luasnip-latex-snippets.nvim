@@ -631,7 +631,7 @@ for trig, spec in pairs(postfix_command_specs) do
         autosnippet(
             {
                 trig = "((\\d+)|(\\d*)(\\\\)?([A-Za-z]+)"
-                    .. "((\\^|_)(\\{\\d+\\}|\\d))*)"
+                    .. "((\\^|_)(\\{[^{}]+\\}|[A-Za-z0-9]))*)"
                     .. trig,
                 name = spec.name .. " of atom",
                 dscr = "Automatically wrap the preceding atom in \\" .. spec.command,
