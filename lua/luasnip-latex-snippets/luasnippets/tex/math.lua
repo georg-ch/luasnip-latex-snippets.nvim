@@ -89,7 +89,7 @@ M = {
 	fmta([[ 
     \[ 
     <>
-    .\]
+    \]
     <>]],
 	{ i(1), i(0) }),
     { condition = line_begin, show_condition = tex.show_line_begin }),
@@ -98,7 +98,7 @@ M = {
 	fmta([[ 
     \begin{align<>}
     <>
-    .\end{align<>}
+    \end{align<>}
     ]],
     { c(1, {t(""), t("*"), t("ed")}), i(2), rep(1) }), -- in order of least-most used
 	{ condition = line_begin, show_condition = tex.show_line_begin }),
@@ -121,7 +121,7 @@ M = {
 	fmta([[ 
     \begin{gather<>}
     <>
-    .\end{gather<>}
+    \end{gather<>}
     ]],
 	{ c(1, {t(""), t("*"), t("ed")}), i(2), rep(1) }),
 	{ condition = line_begin, show_condition = tex.show_line_begin }),
@@ -130,7 +130,7 @@ M = {
 	fmta([[
     \begin{equation<>}
     <>
-    .\end{equation<>}
+    \end{equation<>}
     ]],
 	{ c(1, {t(""), t("*")}), i(2), rep(1) }),
 	{ condition = line_begin, show_condition = tex.show_line_begin }),
