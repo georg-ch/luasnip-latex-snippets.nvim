@@ -224,8 +224,8 @@ M = {
 	      }),
 	      t(""),
 	    }),
-	    i(2),
-	    i(3, "x"),
+	    i(2),       -- integrand
+	    i(3, "x"),  -- variable (defaults to x)
 	    i(0),
 	  }),
 	  {
