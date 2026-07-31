@@ -87,7 +87,7 @@ local single_command_specs = {
 		command = [[\subsubsection]],
 		ext = { label = true, short = "sssec" },
 	},
-	["sec*"] = {
+	["sec_"] = {
 		context = {
 			name = "section*",
 			dscr = "section*",
@@ -96,7 +96,7 @@ local single_command_specs = {
 		command = [[\section*]],
 		ext = { label = true, short = "sec" },
 	},
-    ["ssec*"] = {
+    ["ssec_"] = {
 		context = {
 			name = "subsection*",
 			dscr = "subsection*",
@@ -105,7 +105,7 @@ local single_command_specs = {
 		command = [[\subsection*]],
 		ext = { label = true, short = "subsec" },
 	},
-    ["sssec*"] = {
+    ["sssec_"] = {
 		context = {
 			name = "subsubsection*",
 			dscr = "subsubsection*",
