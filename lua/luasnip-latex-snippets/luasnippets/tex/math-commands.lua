@@ -338,6 +338,7 @@ vim.list_extend(M, greek_snippets)
 
 local symbol_specs = {
 	-- operators
+	["..."] = { context = { name = "..." }, command = [[\ldots ]] },
 	["!="] = { context = { name = "!=" }, command = [[\neq ]] },
 	["<="] = { context = { name = "≤" }, command = [[\leq ]] },
 	[">="] = { context = { name = "≥" }, command = [[\geq ]] },
