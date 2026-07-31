@@ -215,17 +215,16 @@ M = {
 	    dscr = "integral",
 	  },
 	  fmta([[
-	    \int<> <> \, d<><>
+	    \int<> d<> <>
 	  ]], {
 	    c(1, {
-	      fmta([[_{<>}^{<>}]], {
+	      sn(nil, fmta([[_{<>}^{<>}]], {
 	        i(1, "-\\infty"),
 	        i(2, "\\infty"),
-	      }),
+	      })),
 	      t(""),
 	    }),
-	    i(2),       -- integrand
-	    i(3, "x"),  -- variable (defaults to x)
+	    i(2, "x"),
 	    i(0),
 	  }),
 	  {
