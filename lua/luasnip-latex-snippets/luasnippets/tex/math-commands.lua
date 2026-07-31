@@ -453,6 +453,14 @@ local single_command_math_specs = {
 			dscr = "auto subscript 3",
 			wordTrig = false,
 		},
+		command = [[^]],
+	},
+	["^^"] = {
+		context = {
+			name = "superscript",
+			dscr = "auto sperscript 3",
+			wordTrig = false,
+		},
 		command = [[_]],
 	},
 	td = {
