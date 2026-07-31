@@ -60,8 +60,14 @@ local generate_postfix_dynamicnode = function(_, parent, _, user_arg1, user_arg2
 end
 
 -- visual util to add insert node - thanks ejmastnak!
+--M.get_visual = function(_, parent)
+--    return sn(nil, i(1, parent.snippet.env.SELECT_RAW))
+--end
 M.get_visual = function(_, parent)
-    return sn(nil, i(1, parent.snippet.env.SELECT_RAW))
+  local selected = parent.snippet.env.LS_SELECT_RAW or {}
+  return sn(nil, {
+    i(1, vim.deepcopy(selected)),
+  })
 end
 
 -- Auto backslash - thanks kunzaatko! (ref: https://github.com/kunzaatko/nvim-dots/blob/trunk/lua/snippets/tex/utils/snippet_templates.lua)
